@@ -4,7 +4,9 @@
   "description": "Tienda virtual",
   "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node back/server.js",
+    "dev": "SET NODE_ENV=DEVELOPMENT& nodemon back/server.js",
+    "prod": "SET NODE_ENV=PRODUCTION& nodemon back/server.js"
   },
   "author": "Jhon Cardenas",
   "license": "ISC",
@@ -12,5 +14,8 @@
     "dotenv": "^16.0.3",
     "express": "^4.18.2",
     "mongoose": "^6.7.4"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.20"
   }
 }
