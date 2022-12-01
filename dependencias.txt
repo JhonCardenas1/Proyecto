@@ -1,0 +1,23 @@
+dependencias para el node js:
+
+
+
+
+
+Dependencias para el React
+OJO: 
+Antes entrar a la carpeta del cd front para instalar todo en esta.
+
+1. Crear los archivos del react en la raiz
+npx create-react-app .    
+
+2. Si salen errores
+npm config set legacy-peer-deps true
+npm audit fix --force
+
+
+3. Instalar dependencias
+
+npm i axios react-alert react-alert-template-basic react-bootstrap 
+react-helmet react-redux redux redux-thunk redux-devtools-extension 
+react-router-dom
