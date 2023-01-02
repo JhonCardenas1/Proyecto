@@ -8,7 +8,7 @@ Dependencias para el React
 OJO: 
 Antes entrar a la carpeta del cd front para instalar todo en esta.
 
-1. Crear los archivos del react en la raiz
+1. Crear los archivos del react en la raiz si ya se tiene una carpeta configurada
 npx create-react-app .    
 
 2. Si salen errores
@@ -21,3 +21,13 @@ npm audit fix --force
 npm i axios react-alert react-alert-template-basic react-bootstrap 
 react-helmet react-redux redux redux-thunk redux-devtools-extension 
 react-router-dom
+
+
+Ojo hya un error en el css linea 283
+.stockCounter input::-webkit-outer-spin-button,
+.stockCounter input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+Instalar snippets NO olvidar extension
