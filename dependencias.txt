@@ -4,6 +4,7 @@ dependencias para el node js:
 
 
 
+
 Dependencias para el React
 OJO: 
 Antes entrar a la carpeta del cd front para instalar todo en esta.
@@ -16,7 +17,7 @@ npm config set legacy-peer-deps true
 npm audit fix --force
 
 
-3. Instalar dependencias
+3. Instalar dependencias en el front
 
 npm i axios react-alert react-alert-template-basic react-bootstrap 
 react-helmet react-redux redux redux-thunk redux-devtools-extension 
@@ -31,3 +32,7 @@ Ojo hya un error en el css linea 283
 }
 
 Instalar snippets NO olvidar extension
+
+
+Instalar los siguientes paquete para la autenticacion instalar en el back
+npm i bcryptjs jsonwebtoken validator nodemailer cookie-parser body-parser

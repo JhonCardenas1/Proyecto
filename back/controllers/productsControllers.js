@@ -1,60 +1,75 @@
+const catchAsyncErros = require("../middleware/catchAsyncErros.js");
 const producto = require("../models/products.js");
+const ErrorHandler = require("../Utils/errorHandler.js");
 const fetch = (url) => import ('node-fetch').then(({default:fetch}) => fetch(url));
 
 
 //Crear nuevo producto /api/productos
-exports.newProduct = async (req, res, next) => {
+exports.newProduct = catchAsyncErros(async (req, res, next) => {
     const product = await producto.create(req.body);
     res.status(201).json({
         sucess: true,
         product
     })
-}
+})
 
 //Consultar la lista de todos los productos
-exports.getAllProducts = async (req, res, next) => {
+exports.getAllProducts = catchAsyncErros(async (req, res, next) => {
     const productos = await producto.find();
     if(!productos){
-        return res.status(404).json({
+        return next(new ErrorHandler("Informacion no encontrada", 404))
+
+        /*return res.status(404).json({
             success:false,
             error:true
-        })
+        })*/
     }
     res.status(200).json({
         sucess:true,
         count: productos.length,
         productos
     })
-}
+})
 
 //Consultar productos por ID
-exports.getProductsById = async (req, res, next) => {
+exports.getProductsById = catchAsyncErros( async (req, res, next) => {
     const product = await producto.findById(req.params.id);
+    
     if(!product){
-        return res.status(404).json({
-            sucess:false,
-            message: "No se encontro el producto",
-            error:true
-        })
+        
+        return next(new ErrorHandler("Producto no encontrado", 404))
+    
+    //Sin el Middleware
+        /*if(!product){
+            return res.status(404).json({
+                sucess:false,
+                message: "No se encontro el producto",
+                error:true
+            })*/
     }
+
     res.status(200).json({
         sucess:true,
         message: "Aqui debajo estara la informacion del producto",
         product
     })
-}
+})
 
 //Actualizar producto por id
-exports.updateProductById = async (req, res, next) =>{
-    let id = await producto.findById(req.params.id); //variable de tipo modificacle
-    if(!id){ // Verificar si el objeto existe para finalizar el proceso
-        return res.status(404).json({
+exports.updateProductById = catchAsyncErros(async (req, res, next) =>{
+    let product = await producto.findById(req.params.id); //variable de tipo modificacle
+    if(!product){ // Verificar si el objeto existe para finalizar el proceso
+        
+        return next(new ErrorHandler("Producto no encontrado", 404))
+
+        /*return res.status(404).json({
             sucess:false,
             message: "No se encontro el producto"
-        })
+        })*/
     };
+
     //Si el objeto existe, ejecute la actualizacion
-    id = await producto.findByIdAndUpdate(req.params.id, req.body,{
+    product = await producto.findByIdAndUpdate(req.params.id, req.body,{
         new: true,
         runValidators:true
     });
@@ -62,26 +77,29 @@ exports.updateProductById = async (req, res, next) =>{
     res.status(200).json({
         success: true,
         message: "Producto Actualizado",
-        id
+        product
     })
-}
+})
 
 //Eliminar productos
-exports.deleteProduct = async (req, res, next) =>{
-    const id = await producto.findById(req.params.id); //variable de tipo modificacle
-    if(!id){ // Verificar si el objeto existe para finalizar el proceso
-        return res.status(404).json({
+exports.deleteProduct = catchAsyncErros(async (req, res, next) =>{
+    const product = await producto.findById(req.params.id); //variable de tipo modificacle
+    if(!product){ // Verificar si el objeto existe para finalizar el proceso
+       
+        return next(new ErrorHandler("Producto no encontrado", 404))
+
+        /*return res.status(404).json({
             sucess:false,
             message: "No se encontro el producto"
-        })
+        })*/
     };
-    await id.remove();
+    await product.remove();
     res.status(200).json({
         success: true,
         message: "El producto se elimino correctamente"
     });
 
-}
+})
 
 
 
