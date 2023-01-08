@@ -16,13 +16,13 @@ export const Home = () => {
             return alert.error(error)
         }
         dispatch(getProducts());
-        alert.success("OK")
+        //alert.success("OK")
     }, [dispatch])
 
 
   return (
     <Fragment>
-        {loading ? <h1>Cargando...</h1> :(
+        {loading ? <i className='fa fa-refresh fa-spin fa-3x fa-fw'></i> :(
         <Fragment>
                   <MetaData title="Lo mejor en tecnologia"></MetaData>
                   <h1 id="encabezado_productos">Ultimos productos</h1>
