@@ -37,7 +37,7 @@ const Header = () => {
                             <Link className="dropdown-item" to="/">Cerrar sesion</Link>
                         </div>
                 </div>
-                <Link to="/productlist"><i class="fa fa-shopping-cart fa-2x text-white" aria-hidden="true"></i>
+                <Link to="/productList"><i class="fa fa-shopping-cart fa-2x text-white" aria-hidden="true"></i>
                 <span className="ml-1" id="cart_count">2</span></Link>
             </div>
         </nav>

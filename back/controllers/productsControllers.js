@@ -15,8 +15,8 @@ exports.newProduct = catchAsyncErros(async (req, res, next) => {
 
 //Consultar la lista de todos los productos
 exports.getAllProducts = catchAsyncErros(async (req, res, next) => {
-    const productos = await producto.find();
-    if(!productos){
+    const products = await producto.find();
+    if(!products){
         return next(new ErrorHandler("Informacion no encontrada", 404))
 
         /*return res.status(404).json({
@@ -26,8 +26,8 @@ exports.getAllProducts = catchAsyncErros(async (req, res, next) => {
     }
     res.status(200).json({
         sucess:true,
-        count: productos.length,
-        productos
+        count: products.length,
+        products
     })
 })
 

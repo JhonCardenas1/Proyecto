@@ -1,5 +1,6 @@
 import React, { Fragment, useEffect } from 'react'
-import {MDBDataTable} from "mdbreact"
+import { MDBDataTable } from 'mdbreact'
+import { Link } from 'react-router-dom'
 
 import { useAlert } from 'react-alert'
 import { useDispatch, useSelector } from 'react-redux'
@@ -11,7 +12,7 @@ import Sidebar from './Sidebar'
 
 export const ProductList = () => {
 
-    const {loading, productos, error} = useSelector (state => state.products)
+    const {loading, products, error} = useSelector (state => state.products)
     const alert =useAlert();
 
     const dispatch =useDispatch();
@@ -46,17 +47,32 @@ export const ProductList = () => {
                     field: 'vendedor',
                     sort: 'asc'
                 },
+                {
+                    label: 'Acciones',
+                    field: 'acciones',
+                },
             ],
 
             rows:[]
         }
 
-        productos.forEach(product => {
+        products.forEach(product => {
             data.rows.push({
                 nombre: product.nombre,
                 precio: `$${product.precio}`,
                 inventario: product.inventario,
                 vendedor: product.vendedor,
+
+                acciones: <Fragment>
+                    <Link to={`/producto/${product._id}`} className="btn btn-primary py-1 px-2">
+                        <i className="fa fa-eye"></i>
+                    </Link><Link to={`/updateProduct/${product._id}`} className="btn btn-warning py-1 px-2">
+                        <i class="fa fa-pencil"></i>
+                    </Link>
+                    <button className="btn btn-danger py-1 px-2 ml-2">
+                        <i className="fa fa-trash"></i>
+                    </button>
+                </Fragment>
             })
         })
 
@@ -65,7 +81,7 @@ export const ProductList = () => {
 
   return (
     <Fragment>
-         <MetaData Title={"Todos los productos"}></MetaData>
+         <MetaData title={"Todos los productos"}/>
         <div className='row'>
             <div className='col-12 col-md-2'>
                 <Sidebar/>

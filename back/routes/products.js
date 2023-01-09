@@ -6,7 +6,8 @@ const { isAuthenticatedUser, authorizeRoles } = require("../middleware/auth");
 
 //probando autenticacion
 router.route('/producto/nuevo').post(newProduct);
-router.route ('/productos').get(isAuthenticatedUser,authorizeRoles("admin"), getAllProducts);
+router.route ('/productos').get(getAllProducts);
+//router.route ('/productos').get(isAuthenticatedUser,authorizeRoles("admin"), getAllProducts);
 router.route('/producto/:id').get(getProductsById);
 router.route('/producto/:id').put(updateProductById);
 router.route('/producto/:id').delete(deleteProduct);
