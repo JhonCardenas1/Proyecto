@@ -6,7 +6,10 @@ const fetch = (url) => import ('node-fetch').then(({default:fetch}) => fetch(url
 
 //Crear nuevo producto /api/productos
 exports.newProduct = catchAsyncErros(async (req, res, next) => {
+    
+    req.body.user= req.user.id;
     const product = await producto.create(req.body);
+    
     res.status(201).json({
         sucess: true,
         product
