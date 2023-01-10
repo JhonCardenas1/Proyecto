@@ -147,3 +147,66 @@ exports.resetPassword = catchAsyncErros(async(req, res, next) =>{
     tokenEnviado(user, 200, res)
 
 })
+
+//Ver perfil de usuario
+exports.getUserProfile = catchAsyncErros(async(req, res, next) => {
+    const user = await User.findById(req.user.id);
+
+    res.status(200).json({
+        success: true,
+        user
+    })
+
+})
+
+//Update Contraseña (Usuario Logueado)
+exports.updatePassword = catchAsyncErros(async(req, res, next) =>{
+    const user = await User.findById(req.user.id).select("+password");
+
+    //Revisamos si la contraseña vieja es igual a la nueva
+    const sonIguales = await user.compararPass(req.body.oldPassword)
+
+    if(!sonIguales){
+        return next(new ErrorHandler("La contraseña actual no es correcta", 401))
+    }
+
+    user.password = req.body.newPassword;
+    await user.save();
+
+    tokenEnviado(user, 200, res)
+
+})
+
+//update perfil de usuario (logueado)
+exports.updateProfile = catchAsyncErros(async(req, res, next)=>{
+    const nuevaData ={
+       //Actualizar email? seguro ?
+        nombre: req.body.nombre,
+        email: req.body.email 
+    }
+
+    //update Avatar: Pendiente
+
+    const user = await User.findByIdAndUpdate(req.user.id, nuevaData, {
+        new: true,
+        runValidator: true,
+        useFindAndModify: false
+    })
+
+    res.status(200).json({
+        success:true,
+        user
+    })
+})
+
+//Servicios controladores sobre usuarios por parte del ADMIN
+
+//ver todos los usuario
+exports.getAllUsers = catchAsyncErros(async(req, res, next)=>{
+    const users = await User.find();
+
+    res.status(200).json({
+        success: true,
+        users
+    })
+})
